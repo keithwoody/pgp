@@ -5,7 +5,7 @@ require 'pgp/railtie' if defined?( Rails )
 
 module PGP
   KEY_DIR = ( ENV['PGP_KEY_DIR'] || `pwd` ).freeze
-  class << self
+  class Client
     def initialize(password, public_filename='public1024.pem', private_filename='private1024.pem')
       @password = password
       @public_key_file = KEY_DIR + '/' + public_filename
