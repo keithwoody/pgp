@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Duke Jones"]
   spec.email         = ["notme@gmail.com"]
   spec.summary       = %q{Repackages an old rails plugin as a gem}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.description   = %q{See original repo https://github.com/dukejones/pgp}
   spec.homepage      = ""
   spec.license       = "MIT"
 
