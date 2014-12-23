@@ -2,7 +2,7 @@ require 'openssl'
 require 'base64'
 
 class PGP
-  KEY_DIR = ENV['PGP_KEY_DIR'].freeze
+  KEY_DIR = ( ENV['PGP_KEY_DIR'] || `pwd` ).freeze
 
   def initialize(password, public_filename='public1024.pem', private_filename='private1024.pem')
     @password = password
