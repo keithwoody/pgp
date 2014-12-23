@@ -3,41 +3,42 @@ require 'base64'
 
 require 'pgp/railtie' if defined?( Rails )
 
-class PGP
+module PGP
   KEY_DIR = ( ENV['PGP_KEY_DIR'] || `pwd` ).freeze
-
-  def initialize(password, public_filename='public1024.pem', private_filename='private1024.pem')
-    @password = password
-    @public_key_file = KEY_DIR + '/' + public_filename
-    @private_key_file = KEY_DIR + '/' + private_filename
-  end
-
-  def encrypt_url(string)
-    CGI::escape(encrypt(string))
-  end
-
-  def decrypt_url(string)
-    decrypt(CGI::unescape(string))
-  end
-
-  def encrypt(string)
-    Base64.encode64(public_key.public_encrypt(string)).gsub("\n","")
-  end
-
-  def decrypt(string)
-    private_key.private_decrypt(Base64.decode64(string))
-  end
-
-  def public_key
-    @public_key ||= load_key(@public_key_file)
-  end
-
-  private
-    def private_key
-      @private_key ||= load_key(@private_key_file)
+  class << self
+    def initialize(password, public_filename='public1024.pem', private_filename='private1024.pem')
+      @password = password
+      @public_key_file = KEY_DIR + '/' + public_filename
+      @private_key_file = KEY_DIR + '/' + private_filename
     end
 
-    def load_key(key_file)
-      OpenSSL::PKey::RSA.new(File.read(key_file), @password)
+    def encrypt_url(string)
+      CGI::escape(encrypt(string))
     end
+
+    def decrypt_url(string)
+      decrypt(CGI::unescape(string))
+    end
+
+    def encrypt(string)
+      Base64.encode64(public_key.public_encrypt(string)).gsub("\n","")
+    end
+
+    def decrypt(string)
+      private_key.private_decrypt(Base64.decode64(string))
+    end
+
+    def public_key
+      @public_key ||= load_key(@public_key_file)
+    end
+
+    private
+      def private_key
+        @private_key ||= load_key(@private_key_file)
+      end
+
+      def load_key(key_file)
+        OpenSSL::PKey::RSA.new(File.read(key_file), @password)
+      end
+  end
 end
