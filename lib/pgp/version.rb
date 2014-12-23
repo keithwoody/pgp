@@ -1,0 +1,3 @@
+module Pgp
+  VERSION = "0.0.1"
+end
