@@ -1,6 +1,8 @@
 require 'openssl'
 require 'base64'
 
+require 'pgp/railtie' if defined?( Rails )
+
 class PGP
   KEY_DIR = ( ENV['PGP_KEY_DIR'] || `pwd` ).freeze
 
