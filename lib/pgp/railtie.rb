@@ -1,7 +1,7 @@
 module PGP
   class Railtie < Rails::Railtie
     rake_tasks do
-      load 'lib/tasks/pgp_tasks.rake'
+      load File.expand_path('../../tasks/pgp_tasks.rake', __FILE__)
     end
   end
 end
